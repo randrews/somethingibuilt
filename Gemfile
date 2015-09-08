@@ -15,6 +15,8 @@ gem 'jquery-rails'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
+gem 'devise'
+
 group :test, :development, :review do
   gem 'better_errors'
   gem 'binding_of_caller'
