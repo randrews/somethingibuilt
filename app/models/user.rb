@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :projects
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 
   # Include default devise modules. Others available are:

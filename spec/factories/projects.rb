@@ -1,9 +1,7 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :project do
-    name "MyString"
-    user_id 1
-    category "MyString"
+    name { "#{Faker::Hacker.adjective} #{Faker::Hacker.adjective} #{Faker::Hacker.noun}" }
+    user { create(:user) }
+    category { %w{electronics software home-improvement crafts}.sample }
   end
 end
