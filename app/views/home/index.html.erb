@@ -1,6 +1,11 @@
-Welcome home.<br/>
-<% if current_user.present? %>
-    You are logged in as <%= current_user.username %><br/>
-    <%= link_to "Sign out", destroy_user_session_path, method: :delete %><br/>
+<% @projects.each do |project| %>
+    <div class="row">
+        <div class="col-xs-12">
+            <%= link_to project_path(project) do %>
+                <span class="lead"><%= project.name %></span>
+            <% end %>
+            by
+            <%= link_to project.user.username %>
+        </div>
+    </div>
 <% end %>
-<%= link_to "Sign in", new_user_session_path %>

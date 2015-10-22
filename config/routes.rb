@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   root 'home#index'
-
+  resources :projects
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
