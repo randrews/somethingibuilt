@@ -4,5 +4,12 @@ FactoryGirl.define do
     user { create(:user) }
     description { Faker::Lorem.sentence(12) }
     category { %w{electronics software home-improvement crafts}.sample }
+    thumbnail {
+      files = [ 'public/project-placeholder1.jpg',
+        'public/project-placeholder2.jpg',
+        'public/project-placeholder3.jpg',
+        'public/project-placeholder4.jpg' ]
+      File.open(files.sample)
+    }
   end
 end
