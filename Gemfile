@@ -16,6 +16,7 @@ gem 'jquery-rails'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'devise'
+gem 'paperclip'
 
 group :test, :development, :review do
   gem 'better_errors'
