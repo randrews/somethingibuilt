@@ -5,9 +5,12 @@
         <%= stylesheet_link_tag    'application', media: 'all' %>
         <%= javascript_include_tag 'application' %>
         <%= csrf_meta_tags %>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <div class="container-fluid" id="main">
+        <%= render partial: 'shared/navbar' %>
+        <%= render partial: 'shared/flash' %>
+        <div class="container" id="main">
             <%= yield %>
         </div>
     </body>
