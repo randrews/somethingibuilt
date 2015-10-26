@@ -1,19 +1,44 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <h1><%= @project.name %></h1>
+        by
+        <%= @project.user.username %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @project.name %>
-</p>
+        <% if current_user == @project.user %>
+            <%= link_to 'Edit', edit_project_path(@project), class: 'pull-right' %>
+        <% end %>
 
-<p>
-  <strong>User:</strong>
-  <%= @project.user_id %>
-</p>
+    </div>
+</div>
 
-<p>
-  <strong>Category:</strong>
-  <%= @project.category %>
-</p>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        Started on <%= @project.created_at.strftime("%b %-d %Y, %H:%M:%S") %>
+    </div>
+</div>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <%= link_to @project.thumbnail.url, target: '_blank' do %>
+            <div class="thumbnail" style="background-image:url(<%=@project.thumbnail.url(:thumb) %>)"></div>
+        <% end %>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <%= @project.description %>
+    </div>
+</div>
