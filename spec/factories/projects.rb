@@ -11,5 +11,9 @@ FactoryGirl.define do
         'public/project-placeholder4.jpg' ]
       File.open(files.sample)
     }
+
+    after(:create) do |project|
+      create_list(:blog_post, rand(5)+2, project: project)
+    end
   end
 end

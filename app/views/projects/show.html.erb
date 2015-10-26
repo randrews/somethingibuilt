@@ -42,3 +42,23 @@
         <%= @project.description %>
     </div>
 </div>
+
+<% @project.blog_posts.each do |post| %>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <hr/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <strong><%= post.created_at.strftime("%b %-d %Y, %H:%M:%S") %></strong>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <%= post.text %>
+        </div>
+    </div>
+<% end %>
