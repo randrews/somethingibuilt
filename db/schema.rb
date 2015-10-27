@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026015611) do
+ActiveRecord::Schema.define(version: 20151027015037) do
 
   create_table "blog_posts", force: true do |t|
     t.text     "text"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20151026015611) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.text     "unfinished_post"
   end
 
   create_table "users", force: true do |t|

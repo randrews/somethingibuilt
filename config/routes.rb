@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   devise_for :users
 
   root 'home#index'
-  resources :projects
+  resources :projects do
+    resources :blog_posts, only: ['show', 'create', 'update', 'destroy']
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
