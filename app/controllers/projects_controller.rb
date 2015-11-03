@@ -2,7 +2,6 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!, :except => [:show, :index]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_filter :my_project, only: [:edit, :update, :destroy]
-  helper_method :markdown_parser
   respond_to :html
 
   def index
@@ -12,6 +11,7 @@ class ProjectsController < ApplicationController
 
   def show
     @blog_post = BlogPost.new(text: @project.unfinished_post) if @project.user == current_user
+    @markdown_parser = markdown_parser(@project)
     respond_with(@project)
   end
 
@@ -47,23 +47,6 @@ class ProjectsController < ApplicationController
   end
 
   private
-
-  def markdown_parser
-    return @parser if @parser.present?
-
-    renderer = Redcarpet::Render::XHTML.new(escape_html: true,
-                                            link_attributes: { rel: 'nofollow' },
-                                            prettify: true,
-                                            safe_links_only: true,
-                                            hard_wrap: true)
-
-    @parser = Redcarpet::Markdown.new(renderer,
-                                      autolink: true,
-                                      no_intra_emphasis: true,
-                                      fenced_code_blocks: true)
-
-    @parser
-  end
 
   def my_project
     p = Project.find(params[:id])

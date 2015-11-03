@@ -92,3 +92,11 @@ body {
     background-repeat: no-repeat;
     background-color: white;
 }
+
+/**************************************************
+ *** Blog post CSS ********************************
+ **************************************************/
+
+.blog-post img {
+    max-width: 100%;
+}

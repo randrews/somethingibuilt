@@ -79,6 +79,7 @@
                 <li>*italics* is <em>italics</em></li>
                 <li>**bold** is <strong>bold</strong></li>
                 <li>[Link text](http://google.com)</li>
+                <li>![alt text](image_XXX "title") <em>(Click one of your images to get the link text)</em></li>
                 <li>To format something like code, put four spaces at the beginning of each line</li>
                 <li>You can also start and end code blocks with ~~~ (three tildes):
                     <pre>~~~ruby
@@ -110,8 +111,8 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <%= raw(markdown_parser.render(post.text)) %>
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3 blog-post">
+            <%= raw(@markdown_parser.render(post.text)) %>
         </div>
     </div>
 <% end %>
