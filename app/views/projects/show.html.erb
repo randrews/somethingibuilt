@@ -26,7 +26,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
         <%= link_to @project.cover_image_url, target: '_blank', id: "large_image" do %>
-            <img class="col-xs-12" src="<%= @project.cover_image_url %>"/>
+            <img src="<%= @project.cover_image_url %>"/>
         <% end %>
     </div>
 </div>
@@ -42,7 +42,7 @@
         <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_controls">
             <span class="pull-left">Link to this image:&nbsp;</span>
             <code class="pull-left">![](image_<span id="link_image_id"><%= @project.cover_image_id %></span>)</code>
-            <%= link_to "Delete this image", "/images/#{@project.cover_image_id}", method: :delete, class: 'pull-right', id: 'image_delete_link' %>
+            <%= link_to "Manage images", "#", class: 'pull-right' %>
         </div>
     </div>
 <% end %>

@@ -4,6 +4,10 @@ class Project < ActiveRecord::Base
   has_many :images
   belongs_to :cover_image, class: Image
 
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :name, uniqueness: {scope: :user_id}
+
   def self.categories
     %w{electronics software home-improvement crafts}.map{|c| [c.titleize, c] }
   end
