@@ -1,7 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-$(document).ready(function(){
+$('.projects.show').ready(function(){
     $("#big_editor_link").click(function(e){
         var editor = $('textarea');
         if(editor.attr('rows') == 5)
@@ -16,6 +16,19 @@ $(document).ready(function(){
         $("#formatting_help").toggle();
         return e.preventDefault();
     });
+
+    ////////////////////////////////////////
+
+    $(".project-thumbnail").click(function(e){
+        var el = $(e.target);
+        $("#large_image img").attr('src', el.attr('data-url'));
+        $("#image_caption").text(el.attr('title'));
+        $("#link_image_id").text(el.attr('data-id'));
+        $("#image_delete_link").attr('href', '/images/' + el.attr('data-id'));
+        return e.preventDefault();
+    });
+
+    ////////////////////////////////////////
 
     var pending = false;
     var indicator = $("#indicator");

@@ -37,7 +37,7 @@ body {
     overflow: hidden;
 }
 
-.project-thumbnail {
+.project-summary .project-thumbnail {
     height: 100px;
     width: 100px;
     position: absolute;
@@ -85,12 +85,13 @@ body {
     bottom: 5px;
 }
 
-.thumbnail {
-    height: 100px;
-    width: 100px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: white;
+#large_image {
+    max-width: 100%;
+}
+
+#image_caption, #image_controls {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /**************************************************

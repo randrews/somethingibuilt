@@ -25,8 +25,37 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <%= link_to @project.thumbnail.url, target: '_blank' do %>
-            <img class="col-xs-12" src="<%=@project.thumbnail.url() %>)"/>
+        <%= link_to @project.cover_image_url, target: '_blank', id: "large_image" do %>
+            <img class="col-xs-12" src="<%= @project.cover_image_url %>"/>
+        <% end %>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_caption">
+        <%= @project.cover_image.try(:name) %>
+    </div>
+</div>
+
+<% if @project.user == current_user %>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_controls">
+            <span class="pull-left">Link to this image:&nbsp;</span>
+            <code class="pull-left">![](image_<span id="link_image_id"><%= @project.cover_image_id %></span>)</code>
+            <%= link_to "Delete this image", "/images/#{@project.cover_image_id}", method: :delete, class: 'pull-right', id: 'image_delete_link' %>
+        </div>
+    </div>
+<% end %>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <% @project.images.each do |image| %>
+            <%= link_to "#", class: 'project-thumbnail' do
+            %><img src="<%= image.image.url(:thumb) %>"
+                   alt="<%= image.name %>"
+                   title="<%= image.name %>"
+                   data-id="<%= image.id %>"
+                   data-url="<%= image.image.url %>"/><% end %>
         <% end %>
     </div>
 </div>
