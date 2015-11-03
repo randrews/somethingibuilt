@@ -23,7 +23,7 @@ $(document).ready(function(){
     $("#blog_post_text").keypress(function(e){
         if(!pending){
             pending = true;
-            window.setTimeout(saveProgress, 5000);
+            window.setTimeout(saveProgress, 3000);
             indicator.text("");
         }
     });

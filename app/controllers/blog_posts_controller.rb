@@ -14,6 +14,10 @@ class BlogPostsController < ApplicationController
       flash[:notice] = "Post added"
       @project.update_attribute(:unfinished_post, '')
       redirect_to project_url(params[:project_id])
+    else
+      @project.update_attribute(:unfinished_post, blog_post_params[:text])
+      flash[:alert] = "Couldn't add this blog post: #{@blog_post.errors.full_messages.to_sentence}"
+      redirect_to project_url(params[:project_id])
     end
   end
 
@@ -27,7 +31,8 @@ class BlogPostsController < ApplicationController
 
   def destroy
     @blog_post.destroy
-    respond_with(@blog_post)
+    flash[:notice] = "Post deleted"
+    redirect_to project_url(params[:project_id])
   end
 
   private
