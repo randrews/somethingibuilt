@@ -11,7 +11,7 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <%= @project.description %>
+                <%= raw(@markdown_parser.render(@project.description)) %>
             </div>
         </div>
 
@@ -25,7 +25,10 @@
 
             <div class="row">
                 <div class="col-xs-12">
-                    <strong><%= post.created_at.strftime("%b %-d %Y, %H:%M:%S") %></strong>
+                    <a href="<%= project_blog_post_url(@project, post) %>">
+                        <strong><%= post.created_at.strftime("%b %-d %Y, %H:%M:%S") %></strong>
+                    </a>
+
                     <% if @project.user == current_user %>
                         <span class="pull-right">
                             <%= link_to "Edit", edit_project_blog_post_path(@project, post), class: 'small' %>
@@ -38,7 +41,7 @@
 
             <div class="row">
                 <div class="col-xs-12 blog-post">
-                    <%= raw(@markdown_parser.render(post.text)) %>
+                    <%= raw(@markdown_parser.render(post.preview_text)) %>
                 </div>
             </div>
         <% end %>

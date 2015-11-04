@@ -38,7 +38,7 @@
                         <% if image == @project.cover_image %>
                             <span class="text-success">&#10003; Cover image</span>
                         <% else %>
-                            <%= link_to "Delete", project_image_path(@project, image), method: :delete, confirm: "Are you sure?" %>
+                            <%= link_to "Delete", project_image_path(@project, image), method: :delete, data: {confirm: "Are you sure?"} %>
                         <% end %>
                     </div>
                 </div>
