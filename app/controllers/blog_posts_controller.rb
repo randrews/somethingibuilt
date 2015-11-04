@@ -2,8 +2,9 @@
 
 class BlogPostsController < ApplicationController
   before_action :authenticate_user!, :except => [:show, :index]
-  before_action :set_blog_post, only: [:show, :update, :destroy]
-  before_filter :my_project, only: [:create, :update, :destroy]
+  before_action :set_blog_post, only: [:show, :update, :destroy, :edit]
+  before_action :set_project, only: [:edit]
+  before_filter :my_project, only: [:create, :edit, :update, :destroy]
 
   respond_to :html, :json
 
@@ -23,8 +24,10 @@ class BlogPostsController < ApplicationController
 
   def update
     if @blog_post.update(blog_post_params)
-      respond_with(@blog_post)
+      flash[:notice] = "Post updated"
+      redirect_to project_url(params[:project_id])
     else
+      flash[:alert] = "Couldn't add this blog post: #{@blog_post.errors.full_messages.to_sentence}"
       render 'edit'
     end
   end
@@ -39,14 +42,20 @@ class BlogPostsController < ApplicationController
 
   def my_project
     p = Project.find(params[:project_id])
-    if p.user_id != current_user.id
-      flash[:alert] = "You are not the owner of this project"
+    b = BlogPost.find(params[:id])
+
+    if p.user_id != current_user.id || b.project != p
+      flash[:alert] = "You are not the owner of this blog post"
       redirect_to project_url(p)
     end
   end
 
   def set_blog_post
     @blog_post = BlogPost.find(params[:id])
+  end
+
+  def set_project
+    @project = Project.find(params[:project_id])
   end
 
   def blog_post_params

@@ -1,152 +1,46 @@
-<div class="row">
+<div class="row" id="controls">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <h1><%= @project.name %></h1>
-        by
-        <%= @project.user.username %>
+        <%= render partial: 'header' %>
 
-        <% if current_user == @project.user %>
-            <span class="pull-right">
-                <%= link_to 'Edit', edit_project_path(@project) %>
-                |
-                <%= link_to "Manage images", "#" %>
-            </span>
+        <hr/>
+
+        <% if @project.images.any? %>
+            <%= render partial: 'images' %>
+            <hr/>
         <% end %>
 
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        Started on <%= @project.created_at.strftime("%b %-d %Y, %H:%M:%S") %>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <hr/>
-    </div>
-</div>
-
-<% if @project.images.any? %>
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <%= link_to @project.cover_image_url, target: '_blank', id: "large_image" do %>
-                <img src="<%= @project.cover_image_url %>"/>
-            <% end %>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_caption">
-            <%= @project.cover_image.try(:name) %>
-        </div>
-    </div>
-
-    <% if @project.user == current_user %>
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_controls">
-                <span class="pull-left">Link to this image:&nbsp;</span>
-                <code class="pull-left">![](image_<span id="link_image_id"><%= @project.cover_image_id %></span>)</code>
+            <div class="col-xs-12">
+                <%= @project.description %>
             </div>
         </div>
-    <% end %>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <% @project.images.each do |image| %>
-                <%= link_to "#", class: 'project-thumbnail' do
-                %><img src="<%= image.image.url(:thumb) %>"
-                       alt="<%= image.name %>"
-                       title="<%= image.name %>"
-                       data-id="<%= image.id %>"
-                       data-url="<%= image.image.url %>"/><% end %>
-            <% end %>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <% if @project.user == current_user %>
             <hr/>
-        </div>
-    </div>
-<% end %>
+            <%= render partial: 'blog_posts/form', locals: {blog_post: @blog_post} %>
+        <% end %>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <%= @project.description %>
+        <% @project.blog_posts.order("created_at desc").each do |post| %>
+            <hr/>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <strong><%= post.created_at.strftime("%b %-d %Y, %H:%M:%S") %></strong>
+                    <% if @project.user == current_user %>
+                        <span class="pull-right">
+                            <%= link_to "Edit", edit_project_blog_post_path(@project, post), class: 'small' %>
+                            |
+                            <%= link_to "Delete", project_blog_post_path(@project, post), method: 'delete', class: 'small', data: { confirm: "Are you sure?" } %>
+                        </span>
+                    <% end %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 blog-post">
+                    <%= raw(@markdown_parser.render(post.text)) %>
+                </div>
+            </div>
+        <% end %>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <hr/>
-    </div>
-</div>
-
-<% if @project.user == current_user %>
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <%= form_for @blog_post, url: project_blog_posts_path(@project) do |f| %>
-                <input type="hidden" id="project_id" value="<%= @project.id %>"/>
-                <div class="form-group">
-                    <%= f.label :text, "Add post" %>
-                    <%= f.text_area :text, class: 'form-control', rows: 5  %>
-                </div>
-
-                <div class="form-group">
-                    <%= link_to "Big editor", "#", id: 'big_editor_link', class: 'small' %>&nbsp;|&nbsp;
-                    <%= link_to "Formatting", "#", id: 'formatting_help_link', class: 'small' %>&nbsp;&nbsp;
-                    <span id="indicator" class="small text-muted"></span>
-                    <%= f.submit 'Post', class: 'btn btn-default pull-right' %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-
-    <div class="row" id="formatting_help" style="display: none">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <p>
-                We use <%= link_to "Markdown", "http://daringfireball.net/projects/markdown/syntax" %> for formatting blog posts.
-            </p>
-            <p>Quick reference:</p>
-            <ul>
-                <li>*italics* is <em>italics</em></li>
-                <li>**bold** is <strong>bold</strong></li>
-                <li>[Link text](http://google.com)</li>
-                <li>![alt text](image_XXX "title") <em>(Click one of your images to get the link text)</em></li>
-                <li>To format something like code, put four spaces at the beginning of each line</li>
-                <li>You can also start and end code blocks with ~~~ (three tildes):
-                    <pre>~~~ruby
-@something.whatever(2, "some string")
-~~~</pre>
-                    becomes
-                    <pre><code class="prettyprint lang-ruby">@something.whatever(2, &quot;some string&quot;)
-</code></pre>
-                </li>
-            </ul>
-        </div>
-    </div>
-<% end %>
-
-<% @project.blog_posts.order("created_at desc").each do |post| %>
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <hr/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <strong><%= post.created_at.strftime("%b %-d %Y, %H:%M:%S") %></strong>
-            <% if @project.user == current_user %>
-                <%= link_to "Delete", project_blog_post_path(@project, post), method: 'delete', class: 'small pull-right', data: { confirm: "Are you sure?" } %>
-            <% end %>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3 blog-post">
-            <%= raw(@markdown_parser.render(post.text)) %>
-        </div>
-    </div>
-<% end %>

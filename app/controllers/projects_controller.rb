@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @blog_post = BlogPost.new(text: @project.unfinished_post) if @project.user == current_user
+    @blog_post = BlogPost.new(text: @project.unfinished_post, project: @project) if @project.user == current_user
     @markdown_parser = markdown_parser(@project)
     respond_with(@project)
   end

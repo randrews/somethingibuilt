@@ -1,0 +1,33 @@
+<%
+big_editor ||= false
+project = blog_post.project
+url = if blog_post.new_record?
+          project_blog_posts_path(project)
+      else
+          project_blog_post_path(project, blog_post)
+      end
+%>
+
+<div class="row">
+    <div class="col-xs-12">
+        <%= form_for blog_post, url: url do |f| %>
+            <input type="hidden" id="project_id" value="<%= project.id %>"/>
+            <div class="form-group">
+                <%= f.label :text, (blog_post.new_record? ? "Add post" : "Edit post") %>
+                <%= f.text_area :text, class: 'form-control blog-post-editor', rows: (big_editor ? 20 : 5)  %>
+            </div>
+
+            <div class="form-group">
+                <% if !big_editor %>
+                    <%= link_to "Big editor", "#", class: 'small big-editor-link' %>&nbsp;|&nbsp;
+                <% end %>
+
+                <%= link_to "Formatting", "#", class: 'small formatting-help-link' %>&nbsp;&nbsp;
+                <span id="indicator" class="small text-muted"></span>
+                <%= f.submit (blog_post.new_record? ? 'Post' : 'Update'), class: 'btn btn-default pull-right' %>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<%= render partial: 'shared/formatting' %>
