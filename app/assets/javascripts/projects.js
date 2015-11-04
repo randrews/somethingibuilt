@@ -24,7 +24,6 @@ $('.projects.show').ready(function(){
         $("#large_image img").attr('src', el.attr('data-url'));
         $("#image_caption").text(el.attr('title'));
         $("#link_image_id").text(el.attr('data-id'));
-        $("#image_delete_link").attr('href', '/images/' + el.attr('data-id'));
         return e.preventDefault();
     });
 

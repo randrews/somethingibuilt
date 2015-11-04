@@ -5,7 +5,11 @@
         <%= @project.user.username %>
 
         <% if current_user == @project.user %>
-            <%= link_to 'Edit', edit_project_path(@project), class: 'pull-right' %>
+            <span class="pull-right">
+                <%= link_to 'Edit', edit_project_path(@project) %>
+                |
+                <%= link_to "Manage images", "#" %>
+            </span>
         <% end %>
 
     </div>
@@ -23,48 +27,49 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <%= link_to @project.cover_image_url, target: '_blank', id: "large_image" do %>
-            <img src="<%= @project.cover_image_url %>"/>
-        <% end %>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_caption">
-        <%= @project.cover_image.try(:name) %>
-    </div>
-</div>
-
-<% if @project.user == current_user %>
+<% if @project.images.any? %>
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_controls">
-            <span class="pull-left">Link to this image:&nbsp;</span>
-            <code class="pull-left">![](image_<span id="link_image_id"><%= @project.cover_image_id %></span>)</code>
-            <%= link_to "Manage images", "#", class: 'pull-right' %>
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <%= link_to @project.cover_image_url, target: '_blank', id: "large_image" do %>
+                <img src="<%= @project.cover_image_url %>"/>
+            <% end %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_caption">
+            <%= @project.cover_image.try(:name) %>
+        </div>
+    </div>
+
+    <% if @project.user == current_user %>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3" id="image_controls">
+                <span class="pull-left">Link to this image:&nbsp;</span>
+                <code class="pull-left">![](image_<span id="link_image_id"><%= @project.cover_image_id %></span>)</code>
+            </div>
+        </div>
+    <% end %>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <% @project.images.each do |image| %>
+                <%= link_to "#", class: 'project-thumbnail' do
+                %><img src="<%= image.image.url(:thumb) %>"
+                       alt="<%= image.name %>"
+                       title="<%= image.name %>"
+                       data-id="<%= image.id %>"
+                       data-url="<%= image.image.url %>"/><% end %>
+            <% end %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <hr/>
         </div>
     </div>
 <% end %>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <% @project.images.each do |image| %>
-            <%= link_to "#", class: 'project-thumbnail' do
-            %><img src="<%= image.image.url(:thumb) %>"
-                   alt="<%= image.name %>"
-                   title="<%= image.name %>"
-                   data-id="<%= image.id %>"
-                   data-url="<%= image.image.url %>"/><% end %>
-        <% end %>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <hr/>
-    </div>
-</div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
