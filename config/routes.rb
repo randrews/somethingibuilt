@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :projects do
     resources :blog_posts, only: ['show', 'create', 'update', 'edit', 'destroy']
+    resources :images, only: ['index', 'create', 'edit', 'update', 'destroy']
   end
 
   # Example of regular route:

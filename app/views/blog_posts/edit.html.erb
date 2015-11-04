@@ -1,5 +1,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <%= render partial: 'projects/header' %>
+        <hr/>
         <%= render partial: 'form', locals: {blog_post: @blog_post, big_editor: true} %>
     </div>
 </div>

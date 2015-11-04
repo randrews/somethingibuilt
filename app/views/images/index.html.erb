@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <%= render partial: 'projects/header' %>
+
+        <hr/>
+
+        <div class="row">
+            <%= form_for @image, url: project_images_path(@project), html: {multipart: true} do |f| %>
+                <div class="col-xs-8">
+                    <%= f.file_field :image, class: 'form-control' %>
+                </div>
+                <div class="col-xs-4">
+                    <%= f.submit "Add image", class: 'form-control btn btn-success' %>
+                </div>
+            <% end %>
+        </div>
+
+        <hr/>
+
+        <% @images.each do |image| %>
+            <div class="row image-row">
+                <div class="col-xs-12">
+                    <a href="<%= image.image.url %>" target="_blank" class="pull-left">
+                        <div class="project-thumbnail" style="background-image:url(<%= image.image.url(:thumb) %>)"></div>
+                    </a>
+
+                    <div class="pull-left">
+                        <% if image.name.present? %>
+                            <%= image.name %>
+                        <% else %>
+                            <em class="text-muted">No description</em>
+                        <% end %>
+                    </div>
+
+                    <div class="pull-right">
+                        <%= link_to "Edit", edit_project_image_path(@project, image) %>
+                        |
+                        <% if image == @project.cover_image %>
+                            <span class="text-success">&#10003; Cover image</span>
+                        <% else %>
+                            <%= link_to "Delete", project_image_path(@project, image), method: :delete, confirm: "Are you sure?" %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+        <% end %>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <%= render partial: 'projects/header' %>
+        <hr/>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <%= link_to @image.image.url, target: '_blank', id: "large_image" do %>
+                    <img src="<%= @image.image.url %>"/>
+                <% end %>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <%= form_for @image, url: project_image_url(@project, @image) do |f| %>
+                    <div class="form-group">
+                        <%= f.label :name, "Description" %>
+                        <%= f.text_area :name, class: 'form-control', rows: 5 %>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <%= check_box_tag 'cover_image', '1', (@image == @project.cover_image) %>
+                                Project cover image
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <%= f.submit "Update", class: 'btn btn-primary pull-right' %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
