@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Copy this to /etc/init.d
+# Make it run on boot with:
+#    sudo update-rc.d unicorn_somethingibuilt defaults
 
 ### BEGIN INIT INFO
 # Provides:          unicorn
