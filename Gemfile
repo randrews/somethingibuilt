@@ -34,6 +34,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'aws-sdk', '< 2.0'
 end
 
 # Use ActiveModel has_secure_password
