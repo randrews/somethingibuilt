@@ -19,7 +19,7 @@ class BlogPostsController < ApplicationController
     if @blog_post.save
       flash[:notice] = "Post added"
       @project.update_attribute(:unfinished_post, '')
-      redirect_to project_url(params[:project_id])
+      redirect_to project_blog_post_url(params[:project_id], @blog_post.id)
     else
       @project.update_attribute(:unfinished_post, blog_post_params[:text])
       flash[:alert] = "Couldn't add this blog post: #{@blog_post.errors.full_messages.to_sentence}"
@@ -30,7 +30,7 @@ class BlogPostsController < ApplicationController
   def update
     if @blog_post.update(blog_post_params)
       flash[:notice] = "Post updated"
-      redirect_to project_url(params[:project_id])
+      redirect_to project_blog_post_url(params[:project_id], @blog_post.id)
     else
       flash[:alert] = "Couldn't update this blog post: #{@blog_post.errors.full_messages.to_sentence}"
       render 'edit'
