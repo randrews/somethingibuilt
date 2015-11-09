@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103043714) do
+ActiveRecord::Schema.define(version: 20151108222403) do
 
   create_table "blog_posts", force: true do |t|
     t.text     "text"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20151103043714) do
     t.string   "category"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "description"
+    t.text     "description",     limit: 255
     t.text     "unfinished_post"
     t.integer  "cover_image_id"
   end
