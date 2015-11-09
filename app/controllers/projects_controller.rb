@@ -26,12 +26,21 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.user = current_user
-    if @project.save
-      if params[:cover] && params[:cover][:image]
-        img = Image.create(image: params[:cover][:image], project: @project)
-        @project.update_attribute(:cover_image, img)
-      end
 
+    if params[:cover] && params[:cover][:image]
+      @img = Image.new(image: params[:cover][:image], project: @project)
+    elsif params[:cover] && params[:cover][:image_url]
+      @img = Image.new(image: URI.parse(params[:cover][:image_url]), project: @project)
+    end
+
+    @project.cover_image = @img if @img
+
+    if @img && !@img.valid?
+      render 'new'
+      return
+    end
+
+    if @project.save
       respond_with(@project)
     else
       render 'new'

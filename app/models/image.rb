@@ -16,4 +16,6 @@ class Image < ActiveRecord::Base
   end
 
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+  validates_attachment :image, presence: true
+  validates :project, presence: true
 end

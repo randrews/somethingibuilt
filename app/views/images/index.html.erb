@@ -10,7 +10,22 @@
                     <%= f.file_field :image, class: 'form-control' %>
                 </div>
                 <div class="col-xs-4">
-                    <%= f.submit "Add image", class: 'form-control btn btn-success' %>
+                    <%= f.submit "Upload image", class: 'form-control btn btn-success' %>
+                </div>
+            <% end %>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <%= form_for @image, url: project_images_path(@project), html: {multipart: true} do |f| %>
+                <div class="col-xs-8">
+                    <input name="image_url" type="url" class="form-control" placeholder="Image URL"/>
+                </div>
+                <div class="col-xs-4">
+                    <%= f.submit "Add from URL", class: 'form-control btn btn-success' %>
                 </div>
             <% end %>
         </div>

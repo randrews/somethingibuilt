@@ -15,10 +15,15 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(image_params)
+    if params[:image]
+      @image = Image.new(image_params)
+    elsif params[:image_url]
+      @image = Image.new(image_from_url_params)
+    end
+
     if @image.save
       flash[:notice] = "Image added"
-      redirect_to project_images_url(@project)
+      redirect_to edit_project_image_url(@project, @image)
     else
       flash[:alert] = "Couldn't add this image: #{@image.errors.full_messages.to_sentence}"
       redirect_to project_images_url(@project)
@@ -87,5 +92,10 @@ class ImagesController < ApplicationController
     p = params.require(:image).permit(:name, :image)
     p[:project_id] = params[:project_id]
     p
+  end
+
+  def image_from_url_params
+    { project_id: params[:project_id],
+      image: params.require(:image_url) }
   end
 end
