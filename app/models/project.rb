@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
   belongs_to :cover_image, class: Image
 
   validates :name, presence: true
+  validates :category, presence: true
   validates :description, presence: true
   validates :name, uniqueness: {scope: :user_id}
 
