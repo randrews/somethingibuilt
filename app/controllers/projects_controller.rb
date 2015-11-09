@@ -28,7 +28,6 @@ class ProjectsController < ApplicationController
     @project.user = current_user
     if @project.save
       if params[:cover] && params[:cover][:image]
-        binding.pry
         img = Image.create(image: params[:cover][:image], project: @project)
         @project.update_attribute(:cover_image, img)
       end
