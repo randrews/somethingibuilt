@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
     if params[:cover] && params[:cover][:image]
       @img = Image.new(image: params[:cover][:image], project: @project)
     elsif params[:cover] && params[:cover][:image_url]
-      @img = Image.new(image: URI.parse(params[:cover][:image_url]), project: @project)
+      @img = Image.new(image: URI.parse(params[:cover][:image_url]).to_s, project: @project)
     end
 
     @project.cover_image = @img if @img
