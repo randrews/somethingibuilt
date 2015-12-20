@@ -27,9 +27,9 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user = current_user
 
-    if params[:cover] && params[:cover][:image]
+    if params[:cover] && params[:cover][:image].present?
       @img = Image.new(image: params[:cover][:image], project: @project)
-    elsif params[:cover] && params[:cover][:image_url]
+    elsif params[:cover] && params[:cover][:image_url].present?
       @img = Image.new(image: URI.parse(params[:cover][:image_url]).to_s, project: @project)
     end
 
